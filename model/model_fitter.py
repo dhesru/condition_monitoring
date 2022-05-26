@@ -5,9 +5,9 @@ import os
 import glob
 from sklearn.model_selection import train_test_split
 from pysurvival.utils.metrics import concordance_index,integrated_brier_score as ibs
-from pysurvival.pysurvival.utils.display import integrated_brier_score, correlation_matrix, compare_to_actual
-from pysurvival.pysurvival.models.multi_task import LinearMultiTaskModel
-from pysurvival.pysurvival.models.survival_forest import ConditionalSurvivalForestModel, ExtraSurvivalTreesModel,RandomSurvivalForestModel
+from pysurvival.utils.display import integrated_brier_score, correlation_matrix, compare_to_actual
+from pysurvival.models.multi_task import LinearMultiTaskModel
+from pysurvival.models.survival_forest import ConditionalSurvivalForestModel, ExtraSurvivalTreesModel,RandomSurvivalForestModel
 
 def model_fitting(option,X_train,T_train,E_train):
     if option == 'Linear MTLR':
