@@ -594,5 +594,4 @@ def correlation_matrix(df, figure_size=(12, 8), text_fontsize=10):
 
     # Add colorbar, specify tick locations to match desired ticklabels
     fig.colorbar(cax, ticks=np.arange(-1.1, 1.1, 0.1))
-    #plt.show()
-    return plt
+    plt.show()

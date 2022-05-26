@@ -208,10 +208,12 @@ if selected == "Model Training":
                                         metrics=['rmse', 'mean', 'median'])
             st.pyplot(results)
             ibs_score = ibs(mdl_type, X_test, T_test, E_test, t_max=None)
-            if len(st.session_state.model) == 0:
-                st.session_state.model = [option,train,test,c_index,ibs_score]
-            else:
-                st.session_state.model.append([option,train,test,c_index,ibs_score])
+
+            if 'model' in st.session_state:
+                if len(st.session_state.model) == 0:
+                    st.session_state.model = [option,train,test,c_index,ibs_score]
+                else:
+                    st.session_state.model.append([option,train,test,c_index,ibs_score])
 
 
 if selected == "Model Evaluation":
