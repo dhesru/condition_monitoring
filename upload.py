@@ -27,7 +27,7 @@ def data_uploader():
         if len(csvs) > 0:
             csv_name = csvs[0]
             print('CASV NAME',csv_name)
-            csv_name = csv_name.split('\\')[1]
+            csv_name = csv_name.split('/')[1]
             df = pd.read_csv(csv_name)
             st.dataframe(df)
             col_names = list(df.columns)
