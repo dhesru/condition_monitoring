@@ -7,7 +7,7 @@ verify_ssl = true
 [packages]
 streamlit = "1.9.0"
 streamlit-option-menu = "0.3.2"
-protobuf = "3.17.3"
+protobuf = "3.19.0"
 plotly = "5.8.0"
 sklearn = "0.0"
 torch = "1.11.0"
