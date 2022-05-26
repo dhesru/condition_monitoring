@@ -42,7 +42,7 @@ def read_long_description():
         return f.read()
 
 def install_requires():
-	with open(CURRENT_DIR + 'requirements.txt', 'r') as requirements_file:
+	with open(CURRENT_DIR + 'requirements-.txt', 'r') as requirements_file:
 	    requirements = requirements_file.readlines()
 	return requirements
 

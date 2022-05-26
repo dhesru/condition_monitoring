@@ -109,7 +109,7 @@ def histogram_intersection(a, b):
     return v
 
 if selected == 'Data Visualization':
-    st.title('Data Viz')
+    st.title('Data Visualization')
     files_path = os.path.join('.', '*')
     files = sorted(glob.iglob(files_path), key=os.path.getctime, reverse=True)
     csvs = [x for x in files if ".csv" in x]
@@ -209,14 +209,17 @@ if selected == "Model Training":
             st.pyplot(results)
             ibs_score = ibs(mdl_type, X_test, T_test, E_test, t_max=None)
 
-            if 'model' in st.session_state:
-                if len(st.session_state.model) == 0:
-                    st.session_state.model = [option,train,test,c_index,ibs_score]
-                else:
-                    st.session_state.model.append([option,train,test,c_index,ibs_score])
+            if 'model' not in st.session_state:
+                model_params_df = pd.DataFrame(columns=['model_type','train_split','test_split','concordance_index','integrated_brier_score'])
+                st.session_state.model = model_params_df.append({'model_type':option,'train_split':train,'test_split':test,'concordance_index':c_index,
+                                                                 'integrated_brier_score':ibs_score},ignore_index=True)
+
+            else:
+                res_dict = {'model_type':option,'train_split':train,'test_split':test,'concordance_index':c_index,'integrated_brier_score':ibs_score}
+                st.session_state.model = st.session_state.model.append(res_dict,ignore_index=True)
 
 
 if selected == "Model Evaluation":
     st.title('Model Evaluation')
-    if len(st.session_state.model) > 0:
-        st.write(st.session_state.model)
+    if 'model' in st.session_state:
+        st.dataframe(st.session_state.model)
