@@ -26,6 +26,7 @@ def data_uploader():
         csvs = [x for x in files if ".csv" in x]
         if len(csvs) > 0:
             csv_name = csvs[0]
+            print('CASV NAME',csv_name)
             csv_name = csv_name.split('\\')[1]
             df = pd.read_csv(csv_name)
             st.dataframe(df)
