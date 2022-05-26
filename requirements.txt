@@ -3,3 +3,4 @@ streamlit-option-menu==0.3.2
 protobuf==3.17.3
 plotly==5.8.0
 sklearn==0.0
+torch==1.11.0
