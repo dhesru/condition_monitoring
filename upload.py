@@ -1,8 +1,5 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
-from io import StringIO
-from streamlit_option_menu import option_menu
 import os
 import glob
 
