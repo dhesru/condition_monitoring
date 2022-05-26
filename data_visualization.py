@@ -25,12 +25,13 @@ def visualization():
         for feat in features:
             data_list.append(df[feat].to_numpy())
 
-        fig = ff.create_distplot(data_list, features, bin_size=[.1, .1, .1])
+        col1, col2 = st.columns(2)
+        with col1:
 
-        corr_val = df[features].corr()
-
-        corr_plt = px.imshow(corr_val, text_auto=True)
-
-        # Plot!
-        st.plotly_chart(fig, use_container_width=True)
-        st.plotly_chart(corr_plt, use_container_width=True)
+            fig = ff.create_distplot(data_list, features, bin_size=[.1, .1, .1])
+            st.plotly_chart(fig, use_container_width=True)
+        with col2:
+            corr_val = df[features].corr()
+            corr_plt = px.imshow(corr_val, text_auto=True)
+            # Plot!
+            st.plotly_chart(corr_plt, use_container_width=True)
