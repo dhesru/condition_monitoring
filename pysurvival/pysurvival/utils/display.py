@@ -398,7 +398,7 @@ def compare_to_actual(model, X, T, E, times=None, is_at_risk=False,
     plt.fill_between(times, actual, actual_lower,
                      label='Confidence Intervals - Lower', color='red', alpha=0.2)
     plt.fill_between(times, actual, actual_upper,
-                     label='Confidence Intervals - Upper', color='red', alpha=0.2)
+                     label=-'Confidence Intervals - Upper', color='red', alpha=0.2)
 
     # Finalizing the chart
     plt.title(title, fontsize=15)

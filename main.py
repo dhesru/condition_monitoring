@@ -6,6 +6,8 @@ from streamlit_option_menu import option_menu
 import os
 import glob
 import plotly.express as px
+
+import data_visualization
 import pysurvival
 import plotly.figure_factory as ff
 from sklearn.model_selection import train_test_split
@@ -98,39 +100,12 @@ if selected == "Upload Data":
             st.dataframe(df)
 
 
-def remove_ttf_event(df):
-    col_names = list(df.columns)
-    col_names.remove('ttf')
-    col_names.remove('event')
-    return col_names
-
 def histogram_intersection(a, b):
     v = np.minimum(a, b).sum().round(decimals=1)
     return v
 
 if selected == 'Data Visualization':
-    st.title('Data Visualization')
-    files_path = os.path.join('.', '*')
-    files = sorted(glob.iglob(files_path), key=os.path.getctime, reverse=True)
-    csvs = [x for x in files if ".csv" in x]
-    if len(csvs) > 0:
-        df = pd.read_csv(csvs[0])
-        features = remove_ttf_event(df)
-        corr_plt = correlation_matrix(df[features], figure_size=(3, 3))
-        # Create distplot with custom bin_size
-        data_list = list()
-        for feat in features:
-            data_list.append(df[feat].to_numpy())
-
-        fig = ff.create_distplot(data_list, features, bin_size=[.1, .1, .1])
-
-        corr_val = df[features].corr()
-
-        corr_plt = px.imshow(corr_val, text_auto=True)
-
-        # Plot!
-        st.plotly_chart(fig, use_container_width=True)
-        st.plotly_chart(corr_plt, use_container_width=True)
+    data_visualization.visualization()
 
 
 def model_fitting(option,X_train,T_train,E_train):
