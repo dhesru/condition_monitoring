@@ -5,9 +5,9 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
+protobuf = "3.20.1"
 streamlit = "1.9.0"
 streamlit-option-menu = "0.3.2"
-protobuf = "3.20.1"
 plotly = "5.8.0"
 sklearn = "1.1.1"
 torch = "1.11.0"
