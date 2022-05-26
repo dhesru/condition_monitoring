@@ -25,7 +25,7 @@ def visualization():
         for feat in features:
             data_list.append(df[feat].to_numpy())
 
-        col1, col2 = st.columns([2,1])
+        col1, col2 = st.columns([2,2])
 
 
         fig = ff.create_distplot(data_list, features, bin_size=[.1, .1, .1])
@@ -34,5 +34,6 @@ def visualization():
 
         corr_val = df[features].corr()
         corr_plt = px.imshow(corr_val, text_auto=True)
+        corr_plt.update_coloraxes(showscale=False)
         col2.subheader("Correlation Plot")
         col2.plotly_chart(corr_plt, use_container_width=True)
