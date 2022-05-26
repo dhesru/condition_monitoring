@@ -7,8 +7,8 @@ verify_ssl = true
 [packages]
 pystan = "2.19.1.1"
 prophet = "1.0.1"
-streamlit = "^1.8.1"
-plotly = "^5.6.0"
+streamlit = "1.8.1"
+plotly = "5.6.0"
 
 [requires]
 python_version = "3.7.8"
