@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import os
 import glob
+import platform
 
 
 def save_uploaded_file(uploadedfile):
@@ -26,8 +27,10 @@ def data_uploader():
         csvs = [x for x in files if ".csv" in x]
         if len(csvs) > 0:
             csv_name = csvs[0]
-            print('CASV NAME',csv_name)
-            csv_name = csv_name.split('/')[1]
+            if platform.system() == 'Windows':
+                csv_name = csv_name.split('\\')[1]
+            else:
+                csv_name = csv_name.split('/')[1]
             df = pd.read_csv(csv_name)
             st.dataframe(df)
             col_names = list(df.columns)
