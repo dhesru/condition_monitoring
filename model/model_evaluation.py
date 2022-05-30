@@ -54,19 +54,14 @@ def evaluate_models():
             mdl_sn = get_model_name(mdl)
             key = get_key(mdl_sn,model_dict)
             trained_models.append(key)
-        print('$$$$$$$',trained_models)
         option = st.selectbox('Select the Model to optimize', trained_models)
         csvs = get_csvs()
         if len(csvs) > 0:
             df = pd.read_csv(csvs[0])
             selected_model = model_dict.get(option)
-            print('#####',selected_model)
             current_directory = os.getcwd()
             final_directory = os.path.join(current_directory, r'trained_models')
             mdl_loc = final_directory + '/' + str(selected_model) + '.zip'
-
-
-
             mdl_infer = load_model(mdl_loc)
             opt_thresh = get_optimal_threshold(df,mdl_infer)
             st.write('Optimal Threshold for the selected model ',opt_thresh)

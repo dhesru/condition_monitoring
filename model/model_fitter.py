@@ -101,19 +101,12 @@ def fit_models():
                                    figure_size=(20, 6.5))
             st.pyplot(fig)
 
-            # results = compare_to_actual(mdl_type, X_test, T_test, E_test,
-            #                             is_at_risk=False, figure_size=(16, 6),
-            #                             metrics=['rmse', 'mean', 'median'])
-            # st.pyplot(results)
             ibs_score = ibs(mdl_type, X_test, T_test, E_test, t_max=None)
 
             if 'model' not in st.session_state:
                 model_params_df = pd.DataFrame(columns=['model_type','train_split','test_split','concordance_index','integrated_brier_score'])
                 st.session_state.model = model_params_df.append({'model_type':option,'train_split':train,'test_split':test,'concordance_index':c_index,
                                                                  'integrated_brier_score':ibs_score},ignore_index=True)
-                #files_path = os.path.join('.', '*')
-
-                #save_model(mdl,files_path)
 
             else:
                 res_dict = {'model_type':option,'train_split':train,'test_split':test,'concordance_index':c_index,'integrated_brier_score':ibs_score}
@@ -124,8 +117,4 @@ def fit_models():
                 mdl_directory = str(final_directory) + '\\' + str(mdl_name) + '.zip'
             else:
                 mdl_directory = str(final_directory) + '/' + str(mdl_name) + '.zip'
-            st.write(mdl)
-            st.write(mdl_directory)
-            print('^^^^^^^^^',mdl)
-            print('%%%%%%%%',mdl_directory)
             save_model(mdl,mdl_directory)
