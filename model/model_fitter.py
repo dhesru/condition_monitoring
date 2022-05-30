@@ -124,6 +124,8 @@ def fit_models():
                 mdl_directory = str(final_directory) + '\\' + str(mdl_name) + '.zip'
             else:
                 mdl_directory = str(final_directory) + '/' + str(mdl_name) + '.zip'
+            st.write(mdl)
+            st.write(mdl_directory)
             print('^^^^^^^^^',mdl)
             print('%%%%%%%%',mdl_directory)
             save_model(mdl,mdl_directory)
