@@ -119,9 +119,10 @@ def fit_models():
                 res_dict = {'model_type':option,'train_split':train,'test_split':test,'concordance_index':c_index,'integrated_brier_score':ibs_score}
                 st.session_state.model = st.session_state.model.append(res_dict,ignore_index=True)
             mdl_name = model_dict.get(option)
-            print('OPT',option)
-            print(mdl)
-            print('##########',final_directory)
-            mdl_directory = str(final_directory) + '\\' + str(mdl_name) + '.zip'
-            print('mfdf',mdl_directory)
+
+            if platform.system() == 'Windows':
+                mdl_directory = str(final_directory) + '\\' + str(mdl_name) + '.zip'
+            else:
+                mdl_directory = str(final_directory) + '/' + str(mdl_name) + '.zip'
+
             save_model(mdl,mdl_directory)
