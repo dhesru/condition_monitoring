@@ -12,7 +12,7 @@ import platform
 if platform.system() == 'Windows':
     from pysurvival.pysurvival.utils import load_model
 else:
-    from pysurvival.pysurvival.utils import load_model
+    from pysurvival.utils import load_model
 
 def get_optimal_threshold(df,model):
     range_vals = np.linspace(0,1,41)
