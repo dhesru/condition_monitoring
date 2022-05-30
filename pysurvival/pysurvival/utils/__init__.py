@@ -134,7 +134,7 @@ def load_model(path_file):
     """
 
     # Initializing a base model
-    from pysurvival.models import BaseModel
+    from pysurvival.pysurvival.models import BaseModel
     base_model = BaseModel()
 
     # Temporary loading the model
@@ -215,19 +215,19 @@ def load_model(path_file):
 
     elif 'random' in model_name.lower() and 'survival' in model_name.lower():
 
-        from pysurvival.models.survival_forest import RandomSurvivalForestModel
+        from pysurvival.pysurvival.models.survival_forest import RandomSurvivalForestModel
         pysurvival_model = RandomSurvivalForestModel()
 
 
     elif 'extra' in model_name.lower() and 'survival' in model_name.lower():
 
-        from pysurvival.models.survival_forest import ExtraSurvivalTreesModel
+        from pysurvival.pysurvival.models.survival_forest import ExtraSurvivalTreesModel
         pysurvival_model = ExtraSurvivalTreesModel()
 
 
     elif 'condi' in model_name.lower() and 'survival' in model_name.lower():
 
-        from pysurvival.models.survival_forest import ConditionalSurvivalForestModel
+        from pysurvival.pysurvival.models.survival_forest import ConditionalSurvivalForestModel
         pysurvival_model = ConditionalSurvivalForestModel()
 
 
@@ -235,12 +235,12 @@ def load_model(path_file):
 
         if 'linear' in model_name.lower():
 
-            from pysurvival.models.svm import LinearSVMModel
+            from pysurvival.pysurvival.models.svm import LinearSVMModel
             pysurvival_model = LinearSVMModel()
 
         elif 'kernel' in model_name.lower():
 
-            from pysurvival.models.svm import KernelSVMModel
+            from pysurvival.pysurvival.models.svm import KernelSVMModel
             pysurvival_model = KernelSVMModel()
 
     else:

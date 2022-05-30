@@ -3,6 +3,8 @@ import numpy as np
 from streamlit_option_menu import option_menu
 import data_visualization
 import model.model_fitter
+import model.model_evaluation as mdl_eval
+from model import inference
 
 import upload
 
@@ -100,9 +102,7 @@ if selected == "Model Training":
 
 
 if selected == "Model Evaluation":
-    st.title('Model Evaluation')
-    if 'model' in st.session_state:
-        st.dataframe(st.session_state.model)
+    mdl_eval.evaluate_models()
 
 if selected == "Model Inference":
-    st.title('Model Inference')
+    inference.infer()
