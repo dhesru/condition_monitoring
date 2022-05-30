@@ -65,6 +65,8 @@ def evaluate_models():
             final_directory = os.path.join(current_directory, r'trained_models')
             mdl_loc = final_directory + '/' + str(selected_model) + '.zip'
 
+
+
             mdl_infer = load_model(mdl_loc)
             opt_thresh = get_optimal_threshold(df,mdl_infer)
             st.write('Optimal Threshold for the selected model ',opt_thresh)

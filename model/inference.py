@@ -24,7 +24,10 @@ def get_key(val,model_dict):
     return "key doesn't exist"
 
 def get_model_name(mdl):
-    model_name = mdl.split('\\')
+    if platform.system() == 'Windows':
+        model_name = mdl.split('\\')
+    else:
+        model_name = mdl.split('/')
     last_index = len(model_name) - 1
     v = model_name[last_index].split('.')
     return v[0]
