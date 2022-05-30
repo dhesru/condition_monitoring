@@ -57,6 +57,7 @@ def infer():
                 current_directory = os.getcwd()
                 final_directory = os.path.join(current_directory, r'trained_models')
                 mdl_loc = final_directory + '/' + str(selected_model) +'.zip'
+                st.write(mdl_loc)
                 mdl_infer = load_model(mdl_loc)
                 categories = st.session_state.categorical
                 dataset = pd.get_dummies(dataframe, columns=categories, drop_first=True)
