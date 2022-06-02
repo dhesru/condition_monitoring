@@ -1,7 +1,7 @@
 #### Condition Monitoring App
 Proof-of-Concept Dashboard for future work on this area
 
-##### This application comes with 5 key features. An explanation of these features can be found below. 
+#### This application comes with 5 key features. An explanation of these features can be found below. 
 
 <strong>User Actions</strong> – User is expected to perform these actions 
 <br><strong>App functions</strong> – Once User Action is met, app functions will be activated
