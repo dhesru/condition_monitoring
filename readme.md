@@ -1,4 +1,4 @@
-#### Condition Monitoring App
+## Condition Monitoring App PoC
 Proof-of-Concept Dashboard for future work on this area
 
 #### This application comes with 5 key features. An explanation of these features can be found below. 
