@@ -61,8 +61,11 @@ def infer():
                 final_directory = os.path.join(current_directory, r'trained_models')
                 mdl_loc = final_directory + '/' + str(selected_model) +'.zip'
                 mdl_infer = load_model(mdl_loc)
-                categories = st.session_state.categorical
-                dataset = pd.get_dummies(dataframe, columns=categories, drop_first=True)
+                try:
+                    categories = st.session_state.categorical
+                    dataset = pd.get_dummies(dataframe, columns=categories, drop_first=True)
+                except Exception as AttributeError:
+                    pass
                 surv_curves = mdl_infer.predict_survival(dataset)
                 haz_rates = mdl_infer.predict_hazard(dataset)
                 with st.expander("Click here to view Survival Curves"):

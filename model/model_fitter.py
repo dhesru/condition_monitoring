@@ -82,8 +82,12 @@ def fit_models():
             event_column = st.session_state.event
 
             # Encoding the categorical variables as one-hot vectors
-            df = pd.get_dummies(df, columns=st.session_state.categorical, drop_first=True)
-            features = np.setdiff1d(df.columns, [time_column,event_column]).tolist()
+            try:
+                df = pd.get_dummies(df, columns=st.session_state.categorical, drop_first=True)
+            except Exception as AttributeError:
+                pass
+
+            features = np.setdiff1d(df.columns, [time_column, event_column]).tolist()
             data_train = df.loc[index_train].reset_index(drop=True)
             data_test = df.loc[index_test].reset_index(drop=True)
 

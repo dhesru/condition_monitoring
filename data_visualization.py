@@ -11,8 +11,11 @@ def remove_ttf_event_categorical(df):
     col_names = list(df.columns)
     col_names.remove(st.session_state.ttf)
     col_names.remove(st.session_state.event)
-    for cat in st.session_state.categorical:
-        col_names.remove(cat)
+    try:
+        for cat in st.session_state.categorical:
+            col_names.remove(cat)
+    except Exception as AttributeError:
+        pass
     return col_names
 
 def kaplan_meier_plot(df,cat_var):
@@ -42,8 +45,8 @@ def visualization():
 
             col1, col2 = st.columns([2,2])
 
-
-            fig = ff.create_distplot(data_list, features, bin_size=[.1, .1, .1])
+            bin_size = [1 for x in range(len(features))]
+            fig = ff.create_distplot(data_list, features, bin_size=bin_size)
             col1.caption("Distribution Plot")
             col1.plotly_chart(fig, use_container_width=True)
 
@@ -52,14 +55,18 @@ def visualization():
             corr_plt.update_coloraxes(showscale=False)
             col2.caption("Correlation Plot")
             col2.plotly_chart(corr_plt, use_container_width=True)
-            catgeroical_vars = st.session_state.categorical
-            v = st.columns(len(catgeroical_vars))
+            try:
+                catgeroical_vars = st.session_state.categorical
+                v = st.columns(len(catgeroical_vars))
+                for idx, cat_var in enumerate(catgeroical_vars):
+                    plt = kaplan_meier_plot(df, cat_var)
+                    header_str = "Kaplan Meier Plot for " + str(cat_var)
+                    v[idx].caption(header_str)
+                    v[idx].pyplot(plt)
+                    plt.close()
+            except Exception as AttributeError:
+                pass
 
-            for idx,cat_var in enumerate(catgeroical_vars):
-                plt = kaplan_meier_plot(df,cat_var)
-                header_str = "Kaplan Meier Plot for " + str(cat_var)
-                v[idx].caption(header_str)
-                v[idx].pyplot(plt)
-                plt.close()
+
         else:
             st.write('Please select the variable types')

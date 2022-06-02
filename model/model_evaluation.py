@@ -16,8 +16,11 @@ else:
 
 def get_optimal_threshold(df,model):
     range_vals = np.linspace(0,1,41)
-    categories = st.session_state.categorical
-    dataset = pd.get_dummies(df, columns=categories, drop_first=True)
+    try:
+        categories = st.session_state.categorical
+        dataset = pd.get_dummies(df, columns=categories, drop_first=True)
+    except Exception as AttributeError:
+        pass
     surv_curves = model.predict_survival(dataset)
     filtered_arr_len = list()
     for ind,thresh in enumerate(range_vals):
