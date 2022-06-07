@@ -163,8 +163,11 @@ def load_model(path_file):
 
 
     elif 'linearmultitask' in model_name.lower():
+        if platform.system() == "Windows":
+            from pysurvival.pysurvival.models.multi_task import LinearMultiTaskModel
+        else:
+            from pysurvival.models.multi_task import LinearMultiTaskModel
 
-        from pysurvival.models.multi_task import LinearMultiTaskModel
         pysurvival_model = LinearMultiTaskModel()
 
 
@@ -223,20 +226,26 @@ def load_model(path_file):
 
 
     elif 'random' in model_name.lower() and 'survival' in model_name.lower():
-
-        from pysurvival.pysurvival.models.survival_forest import RandomSurvivalForestModel
+        if platform.system() == "Windows":
+            from pysurvival.pysurvival.models.survival_forest import RandomSurvivalForestModel
+        else:
+            from pysurvival.models.survival_forest import RandomSurvivalForestModel
         pysurvival_model = RandomSurvivalForestModel()
 
 
     elif 'extra' in model_name.lower() and 'survival' in model_name.lower():
-
-        from pysurvival.pysurvival.models.survival_forest import ExtraSurvivalTreesModel
+        if platform.system() == "Windows":
+            from pysurvival.pysurvival.models.survival_forest import ExtraSurvivalTreesModel
+        else:
+            from pysurvival.models.survival_forest import ExtraSurvivalTreesModel
         pysurvival_model = ExtraSurvivalTreesModel()
 
 
     elif 'condi' in model_name.lower() and 'survival' in model_name.lower():
-
-        from pysurvival.pysurvival.models.survival_forest import ConditionalSurvivalForestModel
+        if platform.system() == "Windows":
+            from pysurvival.pysurvival.models.survival_forest import ConditionalSurvivalForestModel
+        else:
+            from pysurvival.models.survival_forest import ConditionalSurvivalForestModel
         pysurvival_model = ConditionalSurvivalForestModel()
 
 
