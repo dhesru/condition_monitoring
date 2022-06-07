@@ -6,7 +6,7 @@ from scipy import stats
 
 import platform
 
-if platform == "Windows":
+if platform.system() == 'Windows':
     from pysurvival.pysurvival import utils
     from pysurvival.pysurvival.models import BaseModel
     from pysurvival.pysurvival.models._non_parametric import _KaplanMeierModel

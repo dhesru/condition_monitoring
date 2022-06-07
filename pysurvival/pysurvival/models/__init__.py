@@ -12,7 +12,7 @@ from sklearn.preprocessing import StandardScaler
 
 import platform
 
-if platform == "Windows":
+if platform.system() == 'Windows':
     from pysurvival.pysurvival.utils._functions import _get_time_buckets
     from pysurvival.pysurvival import utils
 else:

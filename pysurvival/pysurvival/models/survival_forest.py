@@ -7,7 +7,7 @@ import copy
 from sklearn.preprocessing import StandardScaler
 import platform
 
-if platform == "Windows":
+if platform.system() == 'Windows':
     from pysurvival.pysurvival import utils
     from pysurvival.pysurvival.models import BaseModel
     from pysurvival.pysurvival.models._survival_forest import _SurvivalForestModel

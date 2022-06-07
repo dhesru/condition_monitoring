@@ -4,17 +4,22 @@ from matplotlib import pyplot as plt
 from matplotlib import cm as cm
 from matplotlib import colors
 from matplotlib.patches import Rectangle
-from pysurvival.pysurvival import utils
-from pysurvival.pysurvival.utils import metrics
-from pysurvival.pysurvival.utils.metrics import brier_score
+import platform
+
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 from sklearn.metrics import median_absolute_error
 import platform
 
 if platform.system() == 'Windows':
+    from pysurvival.pysurvival import utils
+    from pysurvival.pysurvival.utils import metrics
+    from pysurvival.pysurvival.utils.metrics import brier_score
     from pysurvival.pysurvival.models.non_parametric import KaplanMeierModel
 else:
     from pysurvival.models.non_parametric import KaplanMeierModel
+    from pysurvival import utils
+    from pysurvival.utils import metrics
+    from pysurvival.utils.metrics import brier_score
 
 
 def display_loss_values(model, figure_size=(18, 5)):

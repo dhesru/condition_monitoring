@@ -4,7 +4,7 @@ import scipy
 import torch
 import platform
 
-if platform == "Windows":
+if platform.system() == 'Windows':
     from pysurvival.pysurvival.models import BaseModel
     from pysurvival.pysurvival import utils, HAS_GPU
     from pysurvival.pysurvival.utils import optimization as opt

@@ -3,7 +3,7 @@ import torch.nn as nn
 import numpy as np
 import platform
 
-if platform == "Windows":
+if platform.system() == 'Windows':
     import pysurvival.pysurvival.utils.optimization as opt
 else:
     import pysurvival.utils.optimization as opt

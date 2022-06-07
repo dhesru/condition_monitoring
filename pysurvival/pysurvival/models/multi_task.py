@@ -5,7 +5,7 @@ import copy
 import multiprocessing
 import platform
 
-if platform == "Windows":
+if platform.system() == 'Windows':
     from pysurvival.pysurvival import HAS_GPU
     from pysurvival.pysurvival import utils
     from pysurvival.pysurvival.utils import neural_networks as nn
