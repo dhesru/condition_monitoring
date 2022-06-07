@@ -1,6 +1,8 @@
 import copy
 import numpy as np
 import pandas as pd
+import platform
+
 if platform.system() == 'Windows':
     from pysurvival.pysurvival.utils._functions import _logrankScores
 else:
