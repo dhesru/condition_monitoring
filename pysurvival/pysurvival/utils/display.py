@@ -408,6 +408,153 @@ def compare_to_actual(model, X, T, E, times=None, is_at_risk=False,
     #return results
 
 
+def create_risk_groups_custom(model, X, use_log=True, num_bins=50,
+                       figure_size=(20, 8), **kwargs):
+    """
+    Computing and displaying the histogram of the risk scores of the given
+    model and test set X. If it is provided args, it will assign a color coding
+    to the scores that are below and above the given thresholds.
+
+    Parameters:
+    -----------
+
+    * model : Pysurvival object
+        Pysurvival model
+
+    * X : array-like, shape=(n_samples, n_features)
+        The input samples.
+
+    * use_log: boolean (default=True)
+        Whether applying the log function to the risk score
+
+    * num_bins: int (default=50)
+        The number of equal-width bins that will constitute the histogram
+
+    * figure_size: tuple of double (default= (16, 6))
+        width, height in inches representing the size of the chart
+
+    * kwargs: dict (optional)
+        kwargs = low_risk = {'lower_bound': 0, 'upper_bound': 20, 'color': 'red'},
+                 high_risk = {'lower_bound': 20, 'upper_bound': 120, 'color': 'blue'}
+            that define the risk group
+
+    """
+
+    # Ensuring that the input data has the right format
+    X = utils.check_data(X)
+
+    # Computing the risk scores
+    risk = model.predict_risk(X)
+    if use_log:
+        risk = np.log(risk)
+
+    # Displaying simple histogram
+    if len(kwargs) == 0:
+
+        # Initializing the chart
+        fig, ax1 = plt.subplots(figsize=figure_size)
+        risk_groups = None
+
+    # Applying any color coding
+    else:
+        # Initializing the results
+        risk_groups = {}
+
+        # Initializing the chart
+        fig, ((ax1, ax2)) = plt.subplots(1, 2, figsize=figure_size)
+
+        # Displaying simple histogram with risk groups
+        nums_per_bins, bins, patches = ax2.hist(risk, bins=num_bins)
+        ax2.set_title('Risk groups with colors', fontsize=15)
+
+        # Number of group definitions
+        num_group_def = len(kwargs.values())
+
+        # Extracting the bounds values
+        bounds = {}
+        colors_ = {}
+        indexes = {}
+        group_names = []
+        handles = []
+
+        # we need to check that the boundaries match the bins
+        is_not_valid = 0
+        for group_name, group_def in kwargs.items():
+
+            # by ensuring that the bounds are not outside
+            # the bins values
+            min_bin, max_bin = min(bins), max(bins)
+            if (group_def['lower_bound'] < min_bin and \
+                group_def['upper_bound'] < min_bin) or \
+                    (group_def['lower_bound'] > max_bin and \
+                     group_def['upper_bound'] > max_bin):
+                is_not_valid += 1
+
+            # Extracting the bounds
+            bounds[group_name] = (group_def['lower_bound'],
+                                  group_def['upper_bound'])
+
+            # Extracting the colors
+            colors_[group_name] = group_def['color']
+
+            # Creating index placeholders
+            indexes[group_name] = []
+            group_names.append(group_name)
+            color_indv = group_def['color']
+            handles.append(Rectangle((0, 0), 1, 1, color=color_indv, ec="k"))
+
+        if is_not_valid >= num_group_def:
+            error_msg = "The boundaries definitions {} do not match"
+            error_msg += ", the values of the risk scores."
+            error_msg = error_msg.format(list(bounds.values()))
+            raise ValueError(error_msg)
+
+        # Assigning each rectangle/bin to its group definition
+        # and color
+        colored_patches = []
+        bin_index = {}
+        for i, bin_, patch_ in zip(range(num_bins), bins, patches):
+
+            # Check if the bin belongs to this bound def
+            for grp_name, bounds_ in bounds.items():
+
+                if bounds_[0] <= bin_ < bounds_[-1]:
+                    bin_index[i] = grp_name
+
+                    # Extracting color
+                    color_ = colors_[grp_name]
+                    if color_ not in colors.CSS4_COLORS:
+                        error_msg = '{} is not a valid color'
+                        error_msg = error_msg.format(colors_[grp_name])
+                        raise ValueError(error_msg)
+
+                    patch_.set_facecolor(color_)
+
+            # Saving the rectangles
+            colored_patches.append(patch_)
+
+        # Assigning each sample to its group
+        risk_bins = np.minimum(np.digitize(risk, bins, True), num_bins - 1)
+        for i, r in enumerate(risk_bins):
+            # Extracting the right group_name
+            group_name = bin_index[r]
+            indexes[group_name].append(i)
+
+    # Displaying the original distribution
+    ax1.hist(risk, bins=num_bins, color='black', alpha=0.5)
+    ax1.set_title('Risk Score Distribution', fontsize=15)
+
+    # # Show everything
+    # plt.show()
+    #
+    # Returning results
+    if risk_groups is not None:
+        for group_name in group_names:
+            result = (colors_[group_name], indexes[group_name])
+            risk_groups[group_name] = result
+
+    return plt, risk_groups
+
 def create_risk_groups(model, X, use_log=True, num_bins=50,
                        figure_size=(20, 8), **kwargs):
     """

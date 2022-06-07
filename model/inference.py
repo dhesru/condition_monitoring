@@ -5,14 +5,16 @@ import os
 import os.path
 import glob
 import platform
+import matplotlib.pyplot as plt
 
 import plotly.express as px
-import plotly.graph_objs as go
 
 if platform.system() == 'Windows':
     from pysurvival.pysurvival.utils import load_model
+    from pysurvival.pysurvival.utils.display import create_risk_groups, create_risk_groups_custom
 else:
     from pysurvival.utils import load_model
+    from pysurvival.utils.display import create_risk_groups
 
 
 model_dict = {'Linear MTLR':'LMTLR','Conditional Survival Forest': 'CSF',"Extra Survival Trees":'EST','Random Survival Forest':'RSF'}
@@ -32,7 +34,57 @@ def get_model_name(mdl):
     v = model_name[last_index].split('.')
     return v[0]
 
+def plt_risk_profile(mdl,X):
+    risk = np.log(mdl.predict_risk(X))
+    risk_hist = np.histogram(risk)
 
+
+    np.max(risk_hist[1]) + ((np.max(risk_hist[1]) - np.min(risk_hist[1])) / 3)
+
+    low_l_bound = np.min(risk_hist[1])
+    low_u_bound = low_l_bound + ((np.max(risk_hist[1]) - np.min(risk_hist[1])) / 3)
+
+    med_l_bound = low_u_bound
+    med_u_bound = med_l_bound + ((np.max(risk_hist[1]) - np.min(risk_hist[1])) / 3)
+
+    high_l_bound = med_u_bound
+    high_u_bound = np.max(risk_hist[1])
+
+    risk_groups = create_risk_groups_custom(model=mdl, X=X,
+                                     use_log=True, num_bins=50, figure_size=(20, 4),
+                                     low={'lower_bound': low_l_bound, 'upper_bound': low_u_bound, 'color': 'red'},
+                                     medium={'lower_bound': med_l_bound, 'upper_bound': med_u_bound, 'color': 'green'},
+                                     high={'lower_bound': high_l_bound, 'upper_bound': high_u_bound, 'color': 'blue'}
+                                     )
+
+    with st.expander("Click here to view Risk groups"):
+        st.pyplot(risk_groups[0])
+    risk_vals = risk_hist[1]
+    risk_groups = risk_groups[1]
+
+    risk_labels = list()
+
+    asset_count = 0
+    with st.expander("Click here to view Risk profiles"):
+        for i, (label, (color, indexes)) in enumerate(risk_groups.items()):
+            if len(indexes) == 0:
+                continue
+            X_ = X.values[indexes, :]
+
+            for x in range(len(X_)):
+                plt.figure().clear()
+                survival = mdl.predict_survival(X_[x, :]).flatten()
+                label_ = '{} risk'.format(label)
+                plt.plot(mdl.times, survival, color=color, label=label_, lw=2)
+                title = "Risk profile for asset " + str(asset_count)
+                plt.legend(fontsize=12)
+                plt.title(title, fontsize=15)
+                plt.ylim(0, 1.05)
+                st.pyplot(plt)
+                plt.figure().clear()
+                asset_count += 1
+                risk_labels.append(label)
+    return risk_labels
 
 def infer():
     st.title('Model Inference')
@@ -65,7 +117,7 @@ def infer():
                     categories = st.session_state.categorical
                     dataset = pd.get_dummies(dataframe, columns=categories, drop_first=True)
                 except Exception as AttributeError:
-                    pass
+                    dataset = dataframe
                 surv_curves = mdl_infer.predict_survival(dataset)
                 haz_rates = mdl_infer.predict_hazard(dataset)
                 with st.expander("Click here to view Survival Curves"):
@@ -81,9 +133,11 @@ def infer():
                         fig.update_traces(line_color='#AA4A44', line_width=1)
                         st.plotly_chart(fig, use_container_width=True)
 
+                risk_labels = plt_risk_profile(mdl_infer,dataset)
                 t = np.where(surv_curves < threshold, 1 , 0)
                 column_name = 'ttf_' + str(threshold)
                 dataframe[column_name] = np.argmax(t,axis=1)
+                dataframe['Risk Level'] = risk_labels
                 st.dataframe(dataframe)
 
 
