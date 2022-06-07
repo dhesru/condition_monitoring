@@ -9,7 +9,13 @@ import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from pysurvival.pysurvival import utils
-from pysurvival.pysurvival.utils._functions import _get_time_buckets
+
+import platform
+
+if platform == "Windows":
+    from pysurvival.pysurvival.utils._functions import _get_time_buckets
+else:
+    from pysurvival.utils._functions import _get_time_buckets
 
 
 class BaseModel(object):

@@ -3,10 +3,20 @@ import os
 import pandas as pd
 import numpy as np
 from scipy import stats
-from pysurvival.pysurvival import utils
-from pysurvival.pysurvival.models import BaseModel
-from pysurvival.pysurvival.models._non_parametric import _KaplanMeierModel
-from pysurvival.pysurvival.models._non_parametric import _KernelModel
+
+import platform
+
+if platform == "Windows":
+    from pysurvival.pysurvival import utils
+    from pysurvival.pysurvival.models import BaseModel
+    from pysurvival.pysurvival.models._non_parametric import _KaplanMeierModel
+    from pysurvival.pysurvival.models._non_parametric import _KernelModel
+else:
+    from pysurvival import utils
+    from pysurvival.models import BaseModel
+    from pysurvival.models._non_parametric import _KaplanMeierModel
+    from pysurvival.models._non_parametric import _KernelModel
+
 
 
 class NonParametricModel(BaseModel):

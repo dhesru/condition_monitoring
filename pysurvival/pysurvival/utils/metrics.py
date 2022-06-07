@@ -2,12 +2,20 @@ from __future__ import absolute_import
 import numpy as np
 import pandas as pd
 import scipy
+import platform
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 from sklearn.metrics import median_absolute_error
-from pysurvival.pysurvival.models.non_parametric import KaplanMeierModel
-from pysurvival.pysurvival.utils._metrics import _concordance_index
-from pysurvival.pysurvival.utils._metrics import _brier_score, _timeROC
-from pysurvival.pysurvival import utils
+
+if platform.system() == 'Windows':
+    from pysurvival.pysurvival.models.non_parametric import KaplanMeierModel
+    from pysurvival.pysurvival.utils._metrics import _concordance_index
+    from pysurvival.pysurvival.utils._metrics import _brier_score, _timeROC
+    from pysurvival.pysurvival import utils
+else:
+    from pysurvival.models.non_parametric import KaplanMeierModel
+    from pysurvival.utils._metrics import _concordance_index
+    from pysurvival.utils._metrics import _brier_score, _timeROC
+    from pysurvival import utils
 
 
 def concordance_index(model, X, T, E, include_ties = True, 

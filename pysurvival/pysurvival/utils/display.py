@@ -9,7 +9,12 @@ from pysurvival.pysurvival.utils import metrics
 from pysurvival.pysurvival.utils.metrics import brier_score
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 from sklearn.metrics import median_absolute_error
-from pysurvival.pysurvival.models.non_parametric import KaplanMeierModel
+import platform
+
+if platform.system() == 'Windows':
+    from pysurvival.pysurvival.models.non_parametric import KaplanMeierModel
+else:
+    from pysurvival.models.non_parametric import KaplanMeierModel
 
 
 def display_loss_values(model, figure_size=(18, 5)):
