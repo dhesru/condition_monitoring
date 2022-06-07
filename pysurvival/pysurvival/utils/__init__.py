@@ -1,7 +1,10 @@
 import copy
 import numpy as np
 import pandas as pd
-from pysurvival.pysurvival.utils._functions import _logrankScores
+if platform.system() == 'Windows':
+    from pysurvival.pysurvival.utils._functions import _logrankScores
+else:
+    from pysurvival.utils._functions import _logrankScores
 # %matplotlib inline for Jupyter notebooks 
 
 
