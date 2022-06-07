@@ -139,7 +139,11 @@ def load_model(path_file):
     """
 
     # Initializing a base model
-    from pysurvival.pysurvival.models import BaseModel
+    import platform
+    if platform.system() == "Windows":
+        from pysurvival.pysurvival.models import BaseModel
+    else:
+        from pysurvival.models import BaseModel
     base_model = BaseModel()
 
     # Temporary loading the model
