@@ -4,7 +4,8 @@ import numpy as np
 import pandas as pd
 import scipy
 import copy
-from pysurvival import HAS_GPU
+
+from pysurvival import HAS_GPUg
 from pysurvival import utils
 from pysurvival.utils import neural_networks as nn
 from pysurvival.utils import optimization as opt

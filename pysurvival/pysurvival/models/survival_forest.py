@@ -5,10 +5,19 @@ import pandas as pd
 import os
 import copy
 from sklearn.preprocessing import StandardScaler
-from pysurvival.pysurvival import utils
-from pysurvival.pysurvival.models import BaseModel
-from pysurvival.pysurvival.models._survival_forest import _SurvivalForestModel
-from pysurvival.pysurvival import PYTHON_VERSION
+import platform
+
+if platform == "Windows":
+    from pysurvival.pysurvival import utils
+    from pysurvival.pysurvival.models import BaseModel
+    from pysurvival.pysurvival.models._survival_forest import _SurvivalForestModel
+    from pysurvival.pysurvival import PYTHON_VERSION
+else:
+    from pysurvival import utils
+    from pysurvival.models import BaseModel
+    from pysurvival.models._survival_forest import _SurvivalForestModel
+    from pysurvival import PYTHON_VERSION
+
 
 # Available Splitting
 SPLITTING_RULES = {'logrank': 1, 'maxstat': 4, 'extratrees': 5}

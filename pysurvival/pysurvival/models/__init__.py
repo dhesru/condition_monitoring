@@ -8,14 +8,16 @@ import zipfile
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
-from pysurvival.pysurvival import utils
+
 
 import platform
 
 if platform == "Windows":
     from pysurvival.pysurvival.utils._functions import _get_time_buckets
+    from pysurvival.pysurvival import utils
 else:
     from pysurvival.utils._functions import _get_time_buckets
+    from pysurvival import utils
 
 
 class BaseModel(object):

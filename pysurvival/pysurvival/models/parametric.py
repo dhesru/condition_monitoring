@@ -2,10 +2,19 @@ from __future__ import absolute_import
 import numpy as np
 import scipy
 import torch
-from pysurvival.models import BaseModel
-from pysurvival import utils, HAS_GPU
-from pysurvival.utils import optimization as opt
-from pysurvival.utils import neural_networks as nn
+import platform
+
+if platform == "Windows":
+    from pysurvival.pysurvival.models import BaseModel
+    from pysurvival.pysurvival import utils, HAS_GPU
+    from pysurvival.pysurvival.utils import optimization as opt
+    from pysurvival.pysurvival.utils import neural_networks as nn
+else:
+    from pysurvival.models import BaseModel
+    from pysurvival import utils, HAS_GPU
+    from pysurvival.utils import optimization as opt
+    from pysurvival.utils import neural_networks as nn
+
 
 
 class BaseParametricModel(BaseModel):

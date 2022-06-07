@@ -1,7 +1,13 @@
 import torch
 import torch.nn as nn
 import numpy as np
-import pysurvival.pysurvival.utils.optimization as opt
+import platform
+
+if platform == "Windows":
+    import pysurvival.pysurvival.utils.optimization as opt
+else:
+    import pysurvival.utils.optimization as opt
+
 
 
 # --------------------------- Activation Functions --------------------------- #
