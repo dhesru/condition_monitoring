@@ -5,6 +5,7 @@ import data_visualization
 import model.model_fitter
 import model.model_evaluation as mdl_eval
 from model import inference
+import info
 
 import upload
 
@@ -17,8 +18,8 @@ def streamlit_menu(example=1):
         with st.sidebar:
             selected = option_menu(
                 menu_title="PdM",  # required
-                options=["Upload Data", "Data Visualization","Model Training", "Model Evaluation","Model Inference"],  # required
-                icons=["cloud-upload", "bar-chart-fill", "robot","clipboard-check"],  # optional
+                options=["Upload Data", "Data Visualization", "Model Training", "Model Evaluation", "Model Inference","Information"],
+                icons=["cloud-upload", "bar-chart-fill", "robot", "clipboard-check","journal-text","info"],  # optional
                 menu_icon="tools",  # optional
                 default_index=0,  # optional
             )
@@ -28,8 +29,8 @@ def streamlit_menu(example=1):
         # 2. horizontal menu w/o custom style
         selected = option_menu(
             menu_title=None,  # required
-            options=["Upload Data", "Data Visualization","Model Training", "Model Evaluation","Model Inference"],  # required
-            icons=["cloud-upload", "bar-chart-fill", "robot","clipboard-check"],  # optional
+            options=["Upload Data", "Data Visualization", "Model Training", "Model Evaluation", "Model Inference","Information"],
+            icons=["cloud-upload", "bar-chart-fill", "robot", "clipboard-check","journal-text","info"],  # optional
             menu_icon="cast",  # optional
             default_index=0,  # optional
             orientation="horizontal",
@@ -40,8 +41,8 @@ def streamlit_menu(example=1):
         # 2. horizontal menu with custom style
         selected = option_menu(
             menu_title=None,  # required
-            options=["Upload Data", "Data Visualization","Model Training", "Model Evaluation","Model Inference"],  # required
-            icons=["cloud-upload", "bar-chart-fill", "robot","clipboard-check"],  # optional
+            options=["Upload Data", "Data Visualization", "Model Training", "Model Evaluation", "Model Inference","Information"],
+            icons=["cloud-upload", "bar-chart-fill", "robot", "clipboard-check","journal-text","info"],  # optional
             menu_icon="cast",  # optional
             default_index=0,  # optional
             orientation="horizontal",
@@ -61,9 +62,31 @@ def streamlit_menu(example=1):
             # 2. horizontal menu with custom style
             selected = option_menu(
                 menu_title=None,  # required
-                options=["Upload Data", "Data Visualization", "Model Training", "Model Evaluation", "Model Inference"],
+                options=["Upload Data", "Data Visualization", "Model Training", "Model Evaluation", "Model Inference","Information"],
                 # required
-                icons=["cloud-upload", "bar-chart-fill", "robot", "clipboard-check"],  # optional
+                icons=["cloud-upload", "bar-chart-fill", "robot", "clipboard-check","journal-text","info"],  # optional
+                menu_icon="cast",  # optional
+                default_index=0,  # optional
+                orientation="horizontal",
+                styles={
+                    "container": {"padding": "0!important", "background-color": "#fafafa"},
+                    "icon": {"color": "orange", "font-size": "25px"},
+                    "nav-link": {
+                        "font-size": "25px",
+                        "text-align": "left",
+                        "margin": "0px",
+                        "--hover-color": "#eee",
+                    },
+                    "nav-link-selected": {"background-color": "green"},
+                },
+            )
+        if example == 5:
+            # 2. horizontal menu with custom style
+            selected = option_menu(
+                menu_title=None,  # required
+                options=["Upload Data", "Data Visualization", "Model Training", "Model Evaluation", "Model Inference","Information"],
+                # required
+                icons=["cloud-upload", "bar-chart-fill", "robot", "clipboard-check","journal-text","info"],  # optional
                 menu_icon="cast",  # optional
                 default_index=0,  # optional
                 orientation="horizontal",
@@ -106,3 +129,6 @@ if selected == "Model Evaluation":
 
 if selected == "Model Inference":
     inference.infer()
+
+if selected == "Information":
+    info.info()
