@@ -14,7 +14,7 @@ if platform.system() == 'Windows':
     from pysurvival.pysurvival.utils.display import create_risk_groups, create_risk_groups_custom
 else:
     from pysurvival.utils import load_model
-    from pysurvival.utils.display import create_risk_groups
+    from pysurvival.utils.display import create_risk_groups, create_risk_groups_custom
 
 
 model_dict = {'Linear MTLR':'LMTLR','Conditional Survival Forest': 'CSF',"Extra Survival Trees":'EST','Random Survival Forest':'RSF'}
