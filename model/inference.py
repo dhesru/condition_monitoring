@@ -137,7 +137,7 @@ def infer():
                 t = np.where(surv_curves < threshold, 1 , 0)
                 column_name = 'ttf_' + str(threshold)
                 dataframe[column_name] = np.argmax(t,axis=1)
-                dataframe['Risk Level'] = risk_labels
+                #dataframe['Risk Level'] = risk_labels
                 st.dataframe(dataframe)
 
 
