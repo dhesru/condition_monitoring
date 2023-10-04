@@ -135,6 +135,9 @@ def fit_models():
 
             if platform.system() == 'Windows':
                 mdl_directory = str(final_directory) + '\\' + str(mdl_name) + '.zip'
+                print('WWWWW')
             else:
                 mdl_directory = str(final_directory) + '/' + str(mdl_name) + '.zip'
+                print('!!!!!!')
+            print(mdl_directory)
             save_model(mdl,mdl_directory)
