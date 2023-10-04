@@ -8,4 +8,4 @@ scikit-survival==0.17.2
 matplotlib==3.5.2
 #pysurvival
 pysurvival.tar.gz
-pyarrow==0.8.0
+pyarrow==11.0.0
