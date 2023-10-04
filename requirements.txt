@@ -6,4 +6,5 @@ sklearn==0.0
 torch==1.11.0
 scikit-survival==0.17.2
 matplotlib==3.5.2
-pysurvival.tar.gz
+pysurvival
+#pysurvival.tar.gz
