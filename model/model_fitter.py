@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import os
 import os.path
+import pickle
 import glob
 from sklearn.model_selection import train_test_split
 import platform
@@ -66,7 +67,8 @@ def get_csvs():
 def fit_models():
     st.title('Model Training')
     csvs = get_csvs()
-    option = st.selectbox('Model Type',('Linear MTLR', 'Conditional Survival Forest', 'Extra Survival Trees','Random Survival Forest'))
+    #option = st.selectbox('Model Type',('Linear MTLR', 'Conditional Survival Forest', 'Extra Survival Trees','Random Survival Forest'))
+    option = st.selectbox('Model Type', ('Conditional Survival Forest', 'Extra Survival Trees', 'Random Survival Forest'))
     final_directory = create_trained_model()
     if len(csvs) > 0:
         df = pd.read_csv(csvs[0])
@@ -108,8 +110,6 @@ def fit_models():
             ibs_score = ibs(mdl_type, X_test, T_test, E_test, t_max=None)
 
             if 'model' not in st.session_state:
-                model_params_df = pd.DataFrame(columns=['model_type','train_split','test_split','concordance_index','integrated_brier_score'])
-
                 data_ = {
                     'model_type': [option],
                     'train_split': [train],
@@ -119,18 +119,10 @@ def fit_models():
 
                 }
 
-                # Create a DataFrame from the dictionary
                 st.session_state.model = pd.DataFrame(data_)
 
-                # st.session_state.model = model_params_df.concat(
-                #     {'model_type': option, 'train_split': train, 'test_split': test, 'concordance_index': c_index,
-                #      'integrated_brier_score': ibs_score}, ignore_index=True)
-                # st.session_state.model = model_params_df.append({'model_type':option,'train_split':train,'test_split':test,'concordance_index':c_index,
-                #                                                  'integrated_brier_score':ibs_score},ignore_index=True)
 
             else:
-                res_dict = {'model_type':option,'train_split':train,'test_split':test,'concordance_index':c_index,'integrated_brier_score':ibs_score}
-
                 data_ = {
                     'model_type': [option],
                     'train_split': [train],
@@ -142,20 +134,13 @@ def fit_models():
                 new_df = pd.DataFrame(data_)
                 result_df = pd.concat([new_df, st.session_state.model], ignore_index=True)
 
-                # Assign the concatenated DataFrame back to st.session_state.model if needed
                 st.session_state.model = result_df
 
-                #st.session_state.model = st.session_state.model.append(res_dict,ignore_index=True)
             mdl_name = model_dict.get(option)
 
             if platform.system() == 'Windows':
                 mdl_directory = str(final_directory) + '\\' + str(mdl_name) + '.zip'
-                print('WWWWW')
-                st.write('WWWW')
             else:
                 mdl_directory = str(final_directory) + '/' + str(mdl_name) + '.zip'
-                print('!!!!!!')
-                st.write('LIN')
-            st.write(mdl_directory)
-            print(mdl_directory)
+
             save_model(mdl,mdl_directory)
