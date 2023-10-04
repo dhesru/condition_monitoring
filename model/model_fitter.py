@@ -140,7 +140,11 @@ def fit_models():
 
                 }
                 new_df = pd.DataFrame(data_)
-                st.session_state.model = st.session_state.model.concat([new_df,st.session_state.model])
+                result_df = pd.concat([new_df, st.session_state.model], ignore_index=True)
+
+                # Assign the concatenated DataFrame back to st.session_state.model if needed
+                st.session_state.model = result_df
+
                 #st.session_state.model = st.session_state.model.append(res_dict,ignore_index=True)
             mdl_name = model_dict.get(option)
 
