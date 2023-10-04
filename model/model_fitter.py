@@ -130,7 +130,18 @@ def fit_models():
 
             else:
                 res_dict = {'model_type':option,'train_split':train,'test_split':test,'concordance_index':c_index,'integrated_brier_score':ibs_score}
-                st.session_state.model = st.session_state.model.append(res_dict,ignore_index=True)
+
+                data_ = {
+                    'model_type': [option],
+                    'train_split': [train],
+                    'test_split': [test],
+                    'concordance_index': [c_index],
+                    'integrated_brier_score': [ibs_score]
+
+                }
+                new_df = pd.DataFrame(data_)
+                st.session_state.model = st.session_state.model.concat([new_df,st.session_state.model])
+                #st.session_state.model = st.session_state.model.append(res_dict,ignore_index=True)
             mdl_name = model_dict.get(option)
 
             if platform.system() == 'Windows':
