@@ -109,8 +109,24 @@ def fit_models():
 
             if 'model' not in st.session_state:
                 model_params_df = pd.DataFrame(columns=['model_type','train_split','test_split','concordance_index','integrated_brier_score'])
-                st.session_state.model = model_params_df.append({'model_type':option,'train_split':train,'test_split':test,'concordance_index':c_index,
-                                                                 'integrated_brier_score':ibs_score},ignore_index=True)
+
+                data_ = {
+                    'model_type': [option],
+                    'train_split': [train],
+                    'test_split' : [test],
+                    'concordance_index': [c_index],
+                    'integrated_brier_score':[ibs_score]
+
+                }
+
+                # Create a DataFrame from the dictionary
+                st.session_state.model = pd.DataFrame(data_)
+
+                # st.session_state.model = model_params_df.concat(
+                #     {'model_type': option, 'train_split': train, 'test_split': test, 'concordance_index': c_index,
+                #      'integrated_brier_score': ibs_score}, ignore_index=True)
+                # st.session_state.model = model_params_df.append({'model_type':option,'train_split':train,'test_split':test,'concordance_index':c_index,
+                #                                                  'integrated_brier_score':ibs_score},ignore_index=True)
 
             else:
                 res_dict = {'model_type':option,'train_split':train,'test_split':test,'concordance_index':c_index,'integrated_brier_score':ibs_score}
